@@ -11,6 +11,13 @@ public class Box {
     private int positionZInTruck;
     private Color color;
 
+    Box(int id, int weight, int height, int length, int width) {
+        this.boxID = id;
+        this.weight = weight;
+        this.height = height;
+        this.length = length;
+        this.width = width;
+    }
     Box(int id, int weight, int height, int length, int width, int x, int y, int z) {
         this.boxID = id;
         this.weight = weight;
