@@ -1,9 +1,9 @@
 import java.awt.Color;
 
 public class Box {
-    private int boxID;
+    private final int boxID;
     private int weight;
-    private int height;
+    private final int height;
     private int length;
     private int width;
     private int positionXInTruck;
@@ -11,14 +11,14 @@ public class Box {
     private int positionZInTruck;
     private Color color;
 
-    Box(int id, int weight, int height, int length, int width) {
+    public Box(int id, int weight, int height, int length, int width) {
         this.boxID = id;
         this.weight = weight;
         this.height = height;
         this.length = length;
         this.width = width;
     }
-    Box(int id, int weight, int height, int length, int width, int x, int y, int z) {
+    public Box(int id, int weight, int height, int length, int width, int x, int y, int z) {
         this.boxID = id;
         this.weight = weight;
         this.height = height;
