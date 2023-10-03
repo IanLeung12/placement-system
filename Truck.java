@@ -6,7 +6,9 @@ public class Truck {
     private int height;
     private int length;
     private int width;
-    private ArrayList<Box> boxes;
+    private ArrayList<Box> boxes; // list of boxes to be loaded
+    private ArrayList<Box> loadedBoxes; // list of boxes that has been loaded to the truck
+    private int[][] spaceArray;
 
     // creating a truck with no boxes to be loaded
     public Truck(int truckId, int maxWeight, int height, int length, int width) {
@@ -15,6 +17,7 @@ public class Truck {
         this.height = height;
         this.length = length;
         this.width = width;
+        this.spaceArray = new int[length][width];
     }
     // creating a truck with pending boxes to be loaded
     public Truck(int truckId, int maxWeight, int height, int length, int width, ArrayList<Box> boxes) {
@@ -35,9 +38,13 @@ public class Truck {
     }
     // return th current loaded weight of the truck
     public int getLoadedWeight() {
-        return 0;
+        int weight = 0;
+        for (Box b: loadedBoxes) {
+            weight += b.getWeight();
+        }
+        return weight;
     }
-    // return the truck as ______________________________________--
+    // return the truck as ______________________________________
     @Override
     public String toString() {
         return "";
