@@ -40,7 +40,10 @@ public class Box {
         this.length = tempLength;
     }
     public int getWeight() {
-        return weight;
+        return this.weight;
+    }
+    public int getId() {
+        return this.boxID;
     }
 
 }
