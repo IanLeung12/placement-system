@@ -46,14 +46,22 @@ public class Box implements Comparable<Box>{
         return this.boxID;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     @Override
     public int compareTo(Box other) {
         if (this.width > this.length) {
             this.rotate();
         }
-        if (other.width > other.length) {
+        if (other.getWidth() > other.getLength()) {
             other.rotate();
         }
-        return this.length - other.length;
+        return other.getLength() - this.length;
     }
 }
