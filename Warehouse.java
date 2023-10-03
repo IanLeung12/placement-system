@@ -2,8 +2,9 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
-public class Warehouse {
+public class Warehouse{
 
     final private int warehouseID;
     final private ArrayList<Box> boxes;
@@ -19,6 +20,7 @@ public class Warehouse {
 
         this.MAX_BOXES = MAX_BOXES;
         this.MAX_TRUCKS = MAX_TRUCKS;
+        Collections.sort(boxes);
     }
 
     public Warehouse(int warehouseID, final int MAX_BOXES, final int MAX_TRUCKS, Box[] boxes, Truck[] trucks) {

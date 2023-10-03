@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class Box {
+public class Box implements Comparable<Box>{
     private final int boxID;
     private int weight;
     private final int height;
@@ -43,4 +43,14 @@ public class Box {
         return weight;
     }
 
+    @Override
+    public int compareTo(Box other) {
+        if (this.width > this.length) {
+            this.rotate();
+        }
+        if (other.width > other.length) {
+            other.rotate();
+        }
+        return this.length - other.length;
+    }
 }
