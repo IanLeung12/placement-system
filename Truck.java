@@ -55,6 +55,21 @@ public class Truck {
         }
         return weight;
     }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
+
+
     // return the truck as ______________________________________
     @Override
     public String toString() {
