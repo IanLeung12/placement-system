@@ -6,11 +6,26 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Box> boxes = new ArrayList<>();
         for (int i = 0; i < 20; i ++) {
-            boxes.add(new Box(i, 69, (int) (Math.random() * 100), (int) (Math.random() * 100), (int) (Math.random() * 100), null));
+            boxes.add(new Box(i, 69, (int) (Math.random() * 10 + 1), (int) (Math.random() * 10 + 1), (int) (Math.random() * 10  +1), null));
         }
         Collections.sort(boxes);
         for (Box box: boxes) {
             System.out.println(box.getId() + ": L" + box.getLength() + " W" + box.getWidth());
+        }
+        Truck truck = new Truck(1, 1200, 999, 20, 150);
+        PlacementSystem sys = new PlacementSystem();
+        sys.loadTruck(boxes, truck);
+        ArrayList<Box> load = truck.getLoadedBoxes();
+        for (Box box: load) {
+            System.out.println(box.getProps());
+        }
+
+        int[][] space = truck.getSpaceArray();
+        for (int i = 0; i < space.length; i ++) {
+            for (int j = 0; j < space[i].length; j ++) {
+                System.out.print(space[i][j]);
+            }
+            System.out.println();
         }
     }
 }

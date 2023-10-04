@@ -5,25 +5,35 @@ public class PlacementSystem {
 
     }
 
-    public void loadTruck(Box[] boxes, Truck truck) {
-        
-    }
-
-    public ArrayList<Box> temp (ArrayList<Box> unsortedboxes, Truck truck) {
-        ArrayList<Box> sortedBoxes = new ArrayList<>();
-        int minSideLength = Math.min(truck.getLength(), truck.getWidth());
-
-        for (int i = 0; i < unsortedboxes.size(); i ++) {
-            Box box = unsortedboxes.get(i);
-            if (box.getLength() > minSideLength) {
-                if (!(box.getWidth() > minSideLength)) {
-                    sortedBoxes.add(box);
+    public void loadTruck(ArrayList<Box> boxes, Truck truck) {
+        int nextY = 0;
+        int j = 0;
+        for (int i = 0; i < truck.getLength(); i ++) {
+            nextY = truck.getWidth();
+            for (int y = 0; y < truck.getWidth(); y ++) {
+                if (truck.getSpaceArray()[i][y] == 0) {
+                    nextY = y;
+                    break;
                 }
-            } else {
-                //Both length and width less than min side length
-                sortedBoxes.add(box);
             }
+            j = boxes.size() - 1;
+            if (boxes.size() > 0) {
+                do {
+                    if (boxes.get(j).getLength() < truck.getWidth() - nextY - 1) {
+                        boxes.get(j).rotate();
+                        boxes.get(j).setCoords(i, nextY);
+                        truck.addBox(boxes.get(j));
+                        nextY = nextY + boxes.get(j).getWidth();
+                        boxes.remove(j);
+
+                    }
+                    j --;
+                } while ((nextY > truck.getWidth()) && (j >= 0));
+            } else {
+                break;
+            }
+
+
         }
-        return sortedBoxes;
     }
 }
