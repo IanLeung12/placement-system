@@ -6,34 +6,42 @@ public class PlacementSystem {
     }
 
     public void loadTruck(ArrayList<Box> boxes, Truck truck) {
-        int nextY = 0;
-        int j = 0;
-        for (int row = 0; row < truck.getLength(); row ++) {
-            nextY = truck.getWidth();
-            for (int column = 0; column < truck.getWidth(); column ++) {
-                if (truck.getSpaceArray()[row][column] == 0) {
-                    nextY = column;
-                    break;
+        int y;
+        int startY;
+        int endY;
+        int maxLength;
+        for (int x = 0; x < truck.getWidth(); x ++) {
+            y = 0;
+            startY = -1;
+            endY = 0;
+            while (y < truck.getLength()) {
+                if ((truck.getSpaceArray()[y][x] == 0) && (startY == -1)) {
+                    startY = y;
+
+                } else if ((startY != -1) && (truck.getSpaceArray()[y][x] != 0)) {
+                    endY = y - 1;
+                } else if (y == truck.getLength() - 1) {
+                    endY = y;
+                }
+                y ++;
+            }
+            System.out.println("ROW: " + x + " Start Y: " + startY + "   End Y: " + endY);
+            maxLength = endY - startY;
+            System.out.println(maxLength);
+
+            for (int b = 0; b < boxes.size(); b ++) {
+                if (maxLength > 0) {
+                    Box box = boxes.get(b);
+                    if (box.getLength() <= maxLength) {
+                        box.setCoords(x, startY);
+                        startY = startY + box.getLength();
+                        maxLength = maxLength - box.getLength();
+                        truck.addBox(box);
+
+                        boxes.remove(b);
+                    }
                 }
             }
-            j = boxes.size() - 1;
-            if (boxes.size() > 0) {
-                do {
-                    if (boxes.get(j).getLength() < truck.getWidth() - nextY - 1) {
-                        boxes.get(j).rotate();
-                        boxes.get(j).setCoords(row, nextY);
-                        truck.addBox(boxes.get(j));
-                        nextY = nextY + boxes.get(j).getWidth();
-                        boxes.remove(j);
-
-                    }
-                    j --;
-                } while ((nextY > truck.getWidth()) && (j >= 0));
-            } else {
-                break;
-            }
-
-
         }
     }
 

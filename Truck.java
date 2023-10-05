@@ -43,11 +43,10 @@ public class Truck {
     // add box to the pending boxes list
     public void addBox(Box box) {
         loadedBoxes.add(box);
-        for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getWidth(); i ++) {
-            for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getLength(); j ++) {
+        for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getLength(); i ++) {
+            for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
                 spaceArray[i][j] = loadedBoxes.size();
-                System.out.print(loadedBoxes.size());
-                System.out.println();
+
             }
         }
     }
