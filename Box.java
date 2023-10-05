@@ -54,6 +54,25 @@ public class Box implements Comparable<Box>{
         return width;
     }
 
+    public int getPositionXInTruck() {
+        return positionXInTruck;
+    }
+
+    public int getPositionYInTruck() {
+        return positionYInTruck;
+    }
+
+    public String getProps() {
+        return "Box ID " + this.boxID + ": Width - " + this.width + ", Length - " + this.width +
+                ", (" + this.positionXInTruck + ", " + this.positionYInTruck + ")";
+    }
+
+
+    public void setCoords(int x, int y) {
+        this.positionXInTruck = x;
+        this.positionYInTruck = y;
+    }
+
     @Override
     public int compareTo(Box other) {
         if (this.width > this.length) {

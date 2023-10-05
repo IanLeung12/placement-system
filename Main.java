@@ -29,5 +29,20 @@ public class Main {
             }
             System.out.println();
         }
+        Truck truck = new Truck(1, 1200, 999, 20, 150);
+        PlacementSystem sys = new PlacementSystem();
+        sys.loadTruck(boxes, truck);
+        ArrayList<Box> load = truck.getLoadedBoxes();
+        for (Box box: load) {
+            System.out.println(box.getProps());
+        }
+
+        int[][] space = truck.getSpaceArray();
+        for (int i = 0; i < space.length; i ++) {
+            for (int j = 0; j < space[i].length; j ++) {
+                System.out.print(space[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
