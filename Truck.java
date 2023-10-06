@@ -46,8 +46,10 @@ public class Truck {
         loadedBoxes.add(box);
         for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getLength(); i ++) {
             for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
-                spaceArray[i][j] = loadedBoxes.size();
-
+                if (spaceArray[i][j] != 0) {
+                    System.out.println("penis");
+                }
+                spaceArray[i][j] = loadedBoxes.size() % 10;
             }
         }
     }
