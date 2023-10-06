@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class Box implements Comparable<Box>{
+public class Box implements Comparable<Box> {
     private final int boxID;
     private int weight;
     private final int height;
@@ -22,6 +22,7 @@ public class Box implements Comparable<Box>{
         this.positionZInTruck = -1;
         this.color = color;
     }
+
     public Box(int id, int weight, int height, int length, int width, int x, int y, int z, Color color) {
         this.boxID = id;
         this.weight = weight;
@@ -39,9 +40,11 @@ public class Box implements Comparable<Box>{
         this.width = length;
         this.length = tempLength;
     }
+
     public int getWeight() {
         return this.weight;
     }
+
     public int getId() {
         return this.boxID;
     }
@@ -62,11 +65,12 @@ public class Box implements Comparable<Box>{
         return positionYInTruck;
     }
 
+    // temporary toString method
+
     public String getProps() {
         return "Box ID " + this.boxID + ": Width - " + this.width + ", Length - " + this.width +
                 ", (" + this.positionXInTruck + ", " + this.positionYInTruck + ")";
     }
-
 
     public void setCoords(int x, int y) {
         this.positionXInTruck = x;

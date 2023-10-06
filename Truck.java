@@ -21,54 +21,58 @@ public class Truck {
         this.width = width;
         this.loadedBoxes = new ArrayList<>();
         this.spaceArray = new int[length][width];
-        for (int i = 0; i < length; i ++) {
-            for (int j = 0; j < width; j ++) {
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
                 spaceArray[i][j] = 0;
             }
         }
     }
 
     /*
-    // creating a truck with pending boxes to be loaded
-    public Truck(int truckId, int maxWeight, int height, int length, int width, ArrayList<Box> boxes) {
-        this.truckId = truckId;
-        this.maxWeight = maxWeight;
-        this.height = height;
-        this.length = length;
-        this.width = width;
-        this.boxes = boxes;
-    }
-    */
+     * // creating a truck with pending boxes to be loaded
+     * public Truck(int truckId, int maxWeight, int height, int length, int width,
+     * ArrayList<Box> boxes) {
+     * this.truckId = truckId;
+     * this.maxWeight = maxWeight;
+     * this.height = height;
+     * this.length = length;
+     * this.width = width;
+     * this.boxes = boxes;
+     * }
+     */
 
     // add box to the pending boxes list
     public void addBox(Box box) {
         loadedBoxes.add(box);
-        for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getWidth(); i ++) {
-            for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getLength(); j ++) {
+        for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getWidth(); i++) {
+            for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getLength(); j++) {
                 spaceArray[i][j] = loadedBoxes.size();
                 System.out.print(loadedBoxes.size());
                 System.out.println();
             }
         }
     }
+
     // remove box from the pending boxes list
     public void removeBox(int boxId) {
         /*
-        for (int i = 0; i < boxes.size(); i++) {
-            if (boxes.get(i).getId() == boxId) {
-                boxes.get;
-            }
-        }
-        */
+         * for (int i = 0; i < boxes.size(); i++) {
+         * if (boxes.get(i).getId() == boxId) {
+         * boxes.get;
+         * }
+         * }
+         */
     }
+
     // return th current loaded weight of the truck
     public int getLoadedWeight() {
         int weight = 0;
-        for (Box b: loadedBoxes) {
+        for (Box b : loadedBoxes) {
             weight += b.getWeight();
         }
         return weight;
     }
+
     // return the truck as ______________________________________
     @Override
     public String toString() {

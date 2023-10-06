@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Warehouse{
+public class Warehouse {
 
     final private int warehouseID;
     final private ArrayList<Box> boxes;
@@ -14,7 +14,8 @@ public class Warehouse{
     final private int MAX_BOXES;
     final private int MAX_TRUCKS;
 
-    public Warehouse(int warehouseID, final int MAX_BOXES, final int MAX_TRUCKS, ArrayList<Box> boxes, ArrayList<Truck> trucks) {
+    public Warehouse(int warehouseID, final int MAX_BOXES, final int MAX_TRUCKS, ArrayList<Box> boxes,
+            ArrayList<Truck> trucks) {
         this.warehouseID = warehouseID;
         this.boxes = boxes;
         this.trucks = trucks;
@@ -50,7 +51,6 @@ public class Warehouse{
         this.trucks.remove(truck);
     }
 
-
     public void loadBoxes(File f) throws IOException {
 
     }
@@ -58,7 +58,6 @@ public class Warehouse{
     public void loadTrucks(File f) throws IOException {
 
     }
-
 
     public void draw(Graphics g) {
 
