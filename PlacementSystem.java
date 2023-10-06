@@ -89,7 +89,7 @@ public class PlacementSystem {
                     high = mid - 1;
                 }
                 mid = (low + high) / 2;
-            
+            }
         }
     }
 

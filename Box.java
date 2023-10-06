@@ -68,7 +68,7 @@ public class Box implements Comparable<Box> {
     // temporary toString method
 
     public String getProps() {
-        return "Box ID " + this.boxID + ": Width - " + this.width + ", Length - " + this.width +
+        return "Box ID " + this.boxID + ": Width - " + this.width + ", Length - " + this.length +
                 ", (" + this.positionXInTruck + ", " + this.positionYInTruck + ")";
     }
 

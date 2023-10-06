@@ -5,9 +5,8 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Box> boxes = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            boxes.add(new Box(i, 69, (int) (Math.random() * 10 + 1), (int) (Math.random() * 10 + 1),
-                    (int) (Math.random() * 10 + 1), null));
+        for (int i = 0; i < 9; i ++) {
+            boxes.add(new Box(i, 69, (int) (Math.random() * 10 + 1), (int) (Math.random() * 10 + 1), (int) (Math.random() * 10  +1), null));
         }
         Collections.sort(boxes);
         Collections.reverse(boxes);
@@ -15,13 +14,7 @@ public class Main {
         for (Box box : boxes) {
             System.out.print(box.getLength() + " ");
         }
-        System.out.println();
-        ArrayList<Box> boxs = PlacementSystem.cutoff(boxes, 5);
-        for (Box box : boxs) {
-            System.out.print(box.getLength() + " ");
-        }
-
-        Truck truck = new Truck(1, 1200, 999, 20, 150);
+        Truck truck = new Truck(1, 1200, 999, 20, 100);
         PlacementSystem sys = new PlacementSystem();
         sys.loadTruck(boxes, truck);
         ArrayList<Box> load = truck.getLoadedBoxes();
@@ -36,5 +29,6 @@ public class Main {
             }
             System.out.println();
         }
+
     }
 }
