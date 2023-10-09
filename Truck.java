@@ -49,7 +49,15 @@ public class Truck {
                 if (spaceArray[i][j] != 0) {
                     System.out.println("penis");
                 }
-                spaceArray[i][j] = loadedBoxes.size() % 10;
+                if (i == spaceArray.length - 1) {
+                    System.out.println("benis");
+                }
+                if (loadedBoxes.size() % 10 == 0) {
+                    spaceArray[i][j] = 5;
+                } else {
+                    spaceArray[i][j] = loadedBoxes.size() % 10;
+                }
+
             }
         }
     }

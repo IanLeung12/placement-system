@@ -13,21 +13,30 @@ public class PlacementSystem {
         for (int x = 0; x < truck.getWidth(); x ++) {
             y = 0;
             startY = -1;
-            endY = 0;
+            endY = -1;
             while (y < truck.getLength()) {
-                if ((truck.getSpaceArray()[y][x] == 0) && (startY == -1)) {
-                    startY = y;
+                if (truck.getSpaceArray()[y][x] == 0) {
+                    if (startY == -1) {
+                        startY = y;
+                    }
+                } else {
+                    if (startY != -1) {
+                        endY = y - 1;
+                    }
 
-                } else if ((startY != -1) && (truck.getSpaceArray()[y][x] != 0)) {
-                    endY = y - 1;
-                } else if (y == truck.getLength() - 1) {
-                    endY = y;
                 }
                 y ++;
             }
-            System.out.println("ROW: " + x + " Start Y: " + startY + "   End Y: " + endY);
-            maxLength = endY - startY;
-            System.out.println(maxLength);
+
+            if (startY != -1 && endY == -1) {
+                endY = truck.getLength() - 1;
+            }
+
+            if (startY == -1) {
+                maxLength = 0;
+            } else {
+                maxLength = endY - startY + 1;
+            }
 
             for (int b = 0; b < boxes.size(); b ++) {
                 if (maxLength > 0) {
@@ -37,8 +46,9 @@ public class PlacementSystem {
                         startY = startY + box.getLength();
                         maxLength = maxLength - box.getLength();
                         truck.addBox(box);
-
                         boxes.remove(b);
+                        b--;
+
                     } else if (box.getWidth() == maxLength) {
                         box.rotate();
                         box.setCoords(x, startY);
@@ -46,6 +56,7 @@ public class PlacementSystem {
                         maxLength = maxLength - box.getLength();
                         truck.addBox(box);
                         boxes.remove(b);
+                        b--;
                     }
                 }
             }

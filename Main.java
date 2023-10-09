@@ -7,13 +7,11 @@ public class Main {
         ArrayList<Box> boxes = new ArrayList<>();
         for (int i = 0; i < 30; i ++) {
             boxes.add(new Box(i, 69, (int) (Math.random() * 10 + 1), (int) (Math.random() * 10 + 1), (int) (Math.random() * 10  +1), null));
+            //boxes.add(new Box(i, 69, 10, 10, 2, null));
         }
         Collections.sort(boxes);
         //Collections.reverse(boxes);
 
-        for (Box box: boxes) {
-            System.out.print(box.getLength() + " ");
-        }
         Truck truck = new Truck(1, 1200, 999, 20, 100);
         PlacementSystem sys = new PlacementSystem();
         sys.loadTruck(boxes, truck);
@@ -22,8 +20,15 @@ public class Main {
             System.out.println(box.getProps());
         }
 
+
         int[][] space = truck.getSpaceArray();
+        System.out.print("i: ");
+        for (int j = 0; j < space[0].length; j ++) {
+            System.out.print(j % 10);
+        }
+        System.out.println();
         for (int i = 0; i < space.length; i ++) {
+            System.out.print(i % 10 + ": ");
             for (int j = 0; j < space[i].length; j ++) {
                 System.out.print(space[i][j]);
             }
