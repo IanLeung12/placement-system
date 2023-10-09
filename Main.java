@@ -5,8 +5,8 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Box> boxes = new ArrayList<>();
-        for (int i = 0; i < 30; i ++) {
-            boxes.add(new Box(i, 69, (int) (Math.random() * 10 + 1), (int) (Math.random() * 10 + 1), (int) (Math.random() * 10  +1), null));
+        for (int i = 0; i < 40; i ++) {
+            boxes.add(new Box(i, 69, (int) (Math.random() * 14 + 1), (int) (Math.random() * 15 + 1), (int) (Math.random() * 10  +1), null));
             //boxes.add(new Box(i, 69, 10, 10, 2, null));
         }
         Collections.sort(boxes);

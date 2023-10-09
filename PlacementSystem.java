@@ -20,7 +20,7 @@ public class PlacementSystem {
                         startY = y;
                     }
                 } else {
-                    if (startY != -1) {
+                    if ((startY != -1) && (endY == -1)) {
                         endY = y - 1;
                     }
 
