@@ -69,7 +69,7 @@ public class Box implements Comparable<Box> {
 
     public String getProps() {
         return "Box ID " + this.boxID + ": (" + this.positionXInTruck + ", " + this.positionYInTruck + ")" + ", (" +
-                (this.positionXInTruck + this.width) + ", " + (this.positionYInTruck + this.length) +")";
+                this.width + ", " + this.length +"), " + this.weight;
     }
 
     public void setCoords(int x, int y) {
@@ -87,4 +87,5 @@ public class Box implements Comparable<Box> {
         }
         return other.getLength() - this.length;
     }
+
 }

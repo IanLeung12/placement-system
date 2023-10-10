@@ -5,20 +5,31 @@ public class PlacementSystem {
 
     }
 
-    public void loadTruck(ArrayList<Box> boxes, Truck truck) {
+    public void loadBoxToTruck(ArrayList<Box> boxes, Truck truck) {
         int y;
         int startY;
         int endY;
         int maxLength;
+        int startY2 = 0;
+        int endY2;
+        int maxLength2;
+        int spaces;
+        boolean widthFits;
+        boolean lengthFits;
+        ArrayList<Integer> availableWidths = new ArrayList<>();
         for (int x = 0; x < truck.getWidth(); x ++) {
+            availableWidths.clear();
             y = 0;
             startY = -1;
             endY = -1;
+            spaces = 0;
+            maxLength2 = -1;
             while (y < truck.getLength()) {
                 if (truck.getSpaceArray()[y][x] == 0) {
                     if (startY == -1) {
                         startY = y;
                     }
+                    spaces ++;
                 } else {
                     if ((startY != -1) && (endY == -1)) {
                         endY = y - 1;
@@ -37,31 +48,128 @@ public class PlacementSystem {
             } else {
                 maxLength = endY - startY + 1;
             }
+            if (spaces != maxLength) {
+                y = 0;
+                startY2 = -1;
+                endY2 = -1;
+                while (y < truck.getLength()) {
+                    if (truck.getSpaceArray()[y][x] == 0) {
+
+                        if (startY2 == -1) {
+                            startY2 = -2;
+                        } else if (startY2 == -3){
+                            startY2 = y;
+                            endY2 = -2;
+                        }
+                    } else {
+                        if (startY2 == -2) {
+                            startY2 = -3;
+                        }
+                        if ((startY2 != -3) && (endY2 == -2)) {
+                            endY2 = y;
+                        }
+
+                    }
+                    y ++;
+                }
+                if (endY2 < 0) {
+                    endY2 = truck.getLength() - 1;
+                }
+                maxLength2 = endY2 - startY2 + 1;
+            }
 
             for (int b = 0; b < boxes.size(); b ++) {
-                if (maxLength > 0) {
-                    Box box = boxes.get(b);
-                    if (box.getLength() <= maxLength) {
+                Box box = boxes.get(b);
+                availableWidths.add(box.getWidth());
+                if ((truck.isValid(box)) && (maxLength > 0) || (maxLength2 > 0)) {
+                    lengthFits = box.getLength() <= (truck.getWidth() - x);
+                    widthFits = box.getWidth() <= (truck.getWidth() - x);
+                    if (box.getLength() <= maxLength && widthFits) {
                         box.setCoords(x, startY);
                         startY = startY + box.getLength();
                         maxLength = maxLength - box.getLength();
                         truck.addBox(box);
                         boxes.remove(b);
+                        availableWidths.remove(b);
                         b--;
 
-                    } else if (box.getWidth() == maxLength) {
+                    } else if (box.getWidth() == maxLength && lengthFits) {
                         box.rotate();
                         box.setCoords(x, startY);
                         startY = startY + box.getLength();
                         maxLength = maxLength - box.getLength();
                         truck.addBox(box);
                         boxes.remove(b);
+                        availableWidths.remove(b);
                         b--;
+                    } else if (box.getWidth() < maxLength && lengthFits) {
+                        for (int w = 0; w < availableWidths.size() - 1; w++) {
+                            if ((availableWidths.get(w) + box.getWidth() == maxLength) &&
+                                    (boxes.get(w).getLength() < (truck.getWidth() - x))) {
+                                Box[] bothBoxes = new Box[]{boxes.get(w), box};
+                                if (truck.isValid(bothBoxes)) {
+                                    boxes.get(w).rotate();
+                                    box.rotate();
+                                    boxes.get(w).setCoords(x, startY);
+                                    box.setCoords(x, startY + boxes.get(w).getLength());
+                                    truck.addBox(boxes.get(w));
+                                    truck.addBox(box);
+                                    boxes.remove(b);
+                                    boxes.remove(w);
+                                    availableWidths.remove(b);
+                                    availableWidths.remove(w);
+                                    maxLength = 0;
+                                    b = b - 2;
+                                }
+
+                            }
+                        }
+                    } else if (maxLength2 != -1) {
+                        if (box.getLength() <= maxLength2 && widthFits) {
+                            box.setCoords(x, startY2);
+                            startY2 = startY2 + box.getLength();
+                            maxLength2 = maxLength2 - box.getLength();
+                            truck.addBox(box);
+                            boxes.remove(b);
+                            availableWidths.remove(b);
+                            b--;
+                        } else if (box.getWidth() == maxLength2 && lengthFits) {
+                            box.rotate();
+                            box.setCoords(x, startY2);
+                            startY2 = startY2 + box.getLength();
+                            maxLength2 = maxLength2 - box.getLength();
+                            truck.addBox(box);
+                            boxes.remove(b);
+                            availableWidths.remove(b);
+                            b--;
+                        } else if (box.getWidth() < maxLength2 && lengthFits) {
+                            for (int w = 0; w < availableWidths.size() - 1; w++) {
+                                if ((availableWidths.get(w) + box.getWidth() == maxLength2) &&
+                                        (boxes.get(w).getLength() < (truck.getWidth() - x))) {
+                                    Box[] bothBoxes = new Box[]{boxes.get(w), box};
+                                    if (truck.isValid(bothBoxes)) {
+                                        boxes.get(w).rotate();
+                                        box.rotate();
+                                        boxes.get(w).setCoords(x, startY2);
+                                        box.setCoords(x, startY + boxes.get(w).getLength());
+                                        truck.addBox(boxes.get(w));
+                                        truck.addBox(box);
+                                        boxes.remove(b);
+                                        boxes.remove(w);
+                                        availableWidths.remove(b);
+                                        availableWidths.remove(w);
+                                        maxLength2 = 0;
+                                        b = b - 2;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
+
 
     public void cutoff(Box[] boxes, int len) {
         int low = 0;
@@ -138,4 +246,6 @@ public class PlacementSystem {
         }
         return sortedBoxes;
     }
+
+    //public void assignBoxPositionInTruck();
 }

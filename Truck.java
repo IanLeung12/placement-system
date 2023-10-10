@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Truck {
     private int truckId;
     private int maxWeight;
+    private int loadedWeight;
     private int height;
     private int length;
     private int width;
@@ -44,10 +45,12 @@ public class Truck {
     // add box to the pending boxes list
     public void addBox(Box box) {
         loadedBoxes.add(box);
+        loadedWeight += box.getWeight();
         for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getLength(); i ++) {
             for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
                 if (spaceArray[i][j] != 0) {
                     System.out.println("penis");
+                    Main.printTruck(spaceArray);
                 }
                 if (loadedBoxes.size() % 10 == 0) {
                     spaceArray[i][j] = 5;
@@ -72,11 +75,15 @@ public class Truck {
 
     // return th current loaded weight of the truck
     public int getLoadedWeight() {
-        int weight = 0;
-        for (Box b : loadedBoxes) {
-            weight += b.getWeight();
-        }
-        return weight;
+        return loadedWeight;
+    }
+
+    public boolean isValid(Box box) {
+        return loadedWeight + box.getWeight() <= maxWeight;
+    }
+
+    public boolean isValid(Box[] boxes) {
+        return loadedWeight + boxes[0].getWeight() + boxes[1 ].getWeight() <= maxWeight;
     }
 
     // return the truck as ______________________________________
