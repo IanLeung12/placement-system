@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
+
 import java.util.ArrayList;
 
 public class Truck {
@@ -48,16 +50,7 @@ public class Truck {
         loadedWeight += box.getWeight();
         for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getLength(); i ++) {
             for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
-                if (spaceArray[i][j] != 0) {
-                    System.out.println("penis");
-                    Main.printTruck(spaceArray);
-                }
-                if (loadedBoxes.size() % 10 == 0) {
-                    spaceArray[i][j] = 5;
-                } else {
-                    spaceArray[i][j] = loadedBoxes.size() % 10;
-                }
-
+                spaceArray[i][j] = loadedBoxes.size() % 9 + 1;
             }
         }
     }
@@ -83,7 +76,7 @@ public class Truck {
     }
 
     public boolean isValid(Box[] boxes) {
-        return loadedWeight + boxes[0].getWeight() + boxes[1 ].getWeight() <= maxWeight;
+        return loadedWeight + boxes[0].getWeight() + boxes[1].getWeight() <= maxWeight;
     }
 
     // return the truck as ______________________________________
