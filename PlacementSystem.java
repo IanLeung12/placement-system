@@ -326,6 +326,8 @@ public class PlacementSystem {
      * @return the modified arraylist
      */
     public static ArrayList<Box> cutoff(ArrayList<Box> boxes, int len) {
+        Collections.sort(boxes);
+        Collections.reverse(boxes);
         int low = 0;
         int high = boxes.size() - 1;
         if (boxes.get(low).getLength() > len) {
@@ -376,24 +378,6 @@ public class PlacementSystem {
                 mid = (low + high) / 2;
             }
         }
-    }
-
-    public ArrayList<Box> temp(ArrayList<Box> unsortedBoxes, Truck truck) {
-        ArrayList<Box> sortedBoxes = new ArrayList<>();
-        int minSideLength = Math.min(truck.getLength(), truck.getWidth());
-
-        for (int i = 0; i < unsortedBoxes.size(); i++) {
-            Box box = unsortedBoxes.get(i);
-            if (box.getLength() > minSideLength) {
-                if (!(box.getWidth() > minSideLength)) {
-                    sortedBoxes.add(box);
-                }
-            } else {
-                // Both length and width less than min side length
-                sortedBoxes.add(box);
-            }
-        }
-        return sortedBoxes;
     }
 
     /**
