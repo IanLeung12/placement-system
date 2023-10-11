@@ -44,10 +44,17 @@ public class Truck {
      * }
      */
 
+    // rotates the truck
+//    public void rotate() {
+//        int newWidth = spaceArray.length;
+//        int newLength = spaceArray[0].length;
+//        int[][] newSpaceArray = new
+
+
     // add box to the pending boxes list
     public void addBox(Box box) {
         loadedBoxes.add(box);
-        loadedWeight += box.getWeight();
+        loadedWeight = loadedWeight + box.getWeight();
         for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getLength(); i ++) {
             for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
                 spaceArray[i][j] = loadedBoxes.size() % 9 + 1;
@@ -72,11 +79,12 @@ public class Truck {
     }
 
     public boolean isValid(Box box) {
-        return loadedWeight + box.getWeight() <= maxWeight;
+        return (loadedWeight + box.getWeight() <= maxWeight) && (box.getHeight() <= height);
     }
 
     public boolean isValid(Box[] boxes) {
-        return loadedWeight + boxes[0].getWeight() + boxes[1].getWeight() <= maxWeight;
+        return ((loadedWeight + boxes[0].getWeight() + boxes[1].getWeight()) <= maxWeight) &&
+                (boxes[0].getHeight() <= height);
     }
 
     // return the truck as ______________________________________
@@ -103,5 +111,9 @@ public class Truck {
 
     public int[][] getSpaceArray() {
         return spaceArray;
+    }
+
+    public int getMaxWeight() {
+        return maxWeight;
     }
 }

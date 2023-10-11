@@ -1,10 +1,11 @@
 /**
  * [PlacementSystem.java]
  * This class is used to load boxes into a truck
+ *
  * @author Ian Leung
  * @author Sfan Shen
  * @author Leon Yuan
- * @version 1.0
+ * @version 1.0 October 10, 2023
  */
 
 import java.util.ArrayList;
@@ -18,16 +19,38 @@ public class PlacementSystem {
     /**
      * loadBoxToTruck
      * loads an array of boxes efficiently into a truck without going over the max weight
-     * @param boxes the boxes to load into the truck
+     * @param box the boxes to load into the truck
      * @param truck the truck
      */
-    public void loadBoxToTruck(ArrayList<Box> boxes, Truck truck) {
+
+    public void loadBoxToTruck(Box box, Truck truck, int row, int col) {
+        //check if box can be loaded into truck
+        if (isValid(box, truck, row, col)) {
+            box.setCoords(row, col);
+            truck.addBox(box);
+        }
+    }
+
+    public boolean isValid(Box box, Truck truck, int y, int x) {
+        if (truck.isValid(box)) {
+            for (int row = y; row < y + box.getLength(); row++) {
+                for (int col = x; col < x + box.getWidth(); col++) {
+                    if (truck.getSpaceArray()[row][col] != 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public void loadBoxesToTruck(ArrayList<Box> boxes, Truck truck) {
         Collections.sort(boxes);
-        int y;
-        int startY;
+        int row;
+        int startRow;
         int endY;
         int maxLength;
-        int startY2 = 0;
+        int startRow2 = 0;
         int endY2;
         int maxLength2;
         int spaces;
@@ -35,103 +58,104 @@ public class PlacementSystem {
         boolean lengthFits;
         ArrayList<Integer> availableWidths = new ArrayList<>();
 
-        for (int x = 0; x < truck.getWidth(); x ++) {
+
+        for (int col = 0; col < truck.getWidth(); col ++) {
             availableWidths.clear();
-            y = 0;
-            startY = -1;
+            row = 0;
+            startRow = -1;
             endY = -1;
             spaces = 0;
             maxLength2 = -1;
 
             // Empty space finding
-            while (y < truck.getLength()) {
-                if (truck.getSpaceArray()[y][x] == 0) {
-                    if (startY == -1) {
-                        startY = y;
+            while (row < truck.getLength()) {
+                if (truck.getSpaceArray()[row][col] == 0) {
+                    if (startRow == -1) {
+                        startRow = row;
                     }
-                    spaces ++;
+                    spaces++;
 
                 } else {
-                    if ((startY != -1) && (endY == -1)) {
-                        endY = y - 1;
+                    if ((startRow != -1) && (endY == -1)) {
+                        endY = row - 1;
                     }
 
                 }
-                y ++;
+                row++;
             }
 
-            if (startY != -1 && endY == -1) {
+            if (startRow != -1 && endY == -1) {
                 endY = truck.getLength() - 1;
             }
 
-            if (startY == -1) {
+            if (startRow == -1) {
                 maxLength = 0;
 
             } else {
-                maxLength = endY - startY + 1;
+                maxLength = endY - startRow + 1;
             }
 
             if (spaces != maxLength) { // Column is split in two by a box
-                y = 0;
-                startY2 = -1;
+                row = 0;
+                startRow2 = -1;
                 endY2 = -1;
 
-                while (y < truck.getLength()) {
-                    if (truck.getSpaceArray()[y][x] == 0) {
+                while (row < truck.getLength()) {
+                    if (truck.getSpaceArray()[row][col] == 0) {
 
-                        if (startY2 == -1) {
-                            startY2 = -2;
+                        if (startRow2 == -1) {
+                            startRow2 = -2;
 
-                        } else if (startY2 == -3){
-                            startY2 = y;
+                        } else if (startRow2 == -3) {
+                            startRow2 = row;
                             endY2 = -2;
                         }
 
                     } else {
-                        if (startY2 == -2) {
-                            startY2 = -3;
+                        if (startRow2 == -2) {
+                            startRow2 = -3;
                         }
 
                         // Indicates that program has passed the dividing box, allowing the second starting position
-                        if ((startY2 != -3) && (endY2 == -2)) {
-                            endY2 = y;
+                        if ((startRow2 != -3) && (endY2 == -2)) {
+                            endY2 = row;
                         }
 
                     }
-                    y ++;
+                    row++;
                 }
 
                 if (endY2 < 0) {
                     endY2 = truck.getLength() - 1;
                 }
-                maxLength2 = endY2 - startY2;
+                maxLength2 = endY2 - startRow2;
             }
 
-            for (int b = 0; b < boxes.size(); b ++) { // Boxes are ordered in decreasing length
+            for (int b = 0; b < boxes.size(); b++) { // Boxes are ordered in decreasing length
 
                 Box box = boxes.get(b);
                 availableWidths.add(box.getWidth());
 
                 if ((truck.isValid(box)) && (maxLength > 0) || (maxLength2 > 0)) {
-                    lengthFits = box.getLength() <= (truck.getWidth() - x);
-                    widthFits = box.getWidth() <= (truck.getWidth() - x);
+                    lengthFits = box.getLength() <= (truck.getWidth() - col);
+                    widthFits = box.getWidth() <= (truck.getWidth() - col);
 
                     if (box.getLength() <= maxLength && widthFits) {
-                        box.setCoords(x, startY);
+                        box.setCoords(col, startRow);
                         truck.addBox(box);
                         boxes.remove(b);
                         availableWidths.remove(b);
-                        startY = startY + box.getLength();
+                        startRow = startRow + box.getLength();
                         maxLength = maxLength - box.getLength();
                         b--;
 
                     } else if (box.getWidth() == maxLength && lengthFits) {
                         box.rotate();
-                        box.setCoords(x, startY);
+                        box.setCoords(col, startRow);
                         truck.addBox(box);
                         boxes.remove(b);
                         availableWidths.remove(b);
-                        startY = startY + box.getLength();
+                        startRow = startRow + box.getLength();
                         maxLength = maxLength - box.getLength();
                         b--;
 
@@ -140,14 +164,14 @@ public class PlacementSystem {
 
                             // When two widths combined fit the empty space
                             if ((availableWidths.get(w) + box.getWidth() == maxLength) &&
-                                    (boxes.get(w).getLength() < (truck.getWidth() - x))) {
+                                    (boxes.get(w).getLength() < (truck.getWidth() - col))) {
                                 Box[] bothBoxes = new Box[]{boxes.get(w), box};
 
                                 if (truck.isValid(bothBoxes)) {
                                     boxes.get(w).rotate();
                                     box.rotate();
-                                    boxes.get(w).setCoords(x, startY);
-                                    box.setCoords(x, startY + boxes.get(w).getLength());
+                                    boxes.get(w).setCoords(col, startRow);
+                                    box.setCoords(col, startRow + boxes.get(w).getLength());
                                     truck.addBox(boxes.get(w));
                                     truck.addBox(box);
                                     boxes.remove(b);
@@ -163,21 +187,21 @@ public class PlacementSystem {
 
                     } else if (maxLength2 > 0) {
                         if (box.getLength() <= maxLength2 && widthFits) {
-                            box.setCoords(x, startY2);
+                            box.setCoords(col, startRow2);
                             truck.addBox(box);
                             boxes.remove(b);
                             availableWidths.remove(b);
-                            startY2 = startY2 + box.getLength();
+                            startRow2 = startRow2 + box.getLength();
                             maxLength2 = maxLength2 - box.getLength();
                             b--;
 
                         } else if (box.getWidth() == maxLength2 && lengthFits) {
                             box.rotate();
-                            box.setCoords(x, startY2);
+                            box.setCoords(col, startRow2);
                             truck.addBox(box);
                             boxes.remove(b);
                             availableWidths.remove(b);
-                            startY2 = startY2 + box.getLength();
+                            startRow2 = startRow2 + box.getLength();
                             maxLength2 = maxLength2 - box.getLength();
                             b--;
 
@@ -185,14 +209,14 @@ public class PlacementSystem {
                             for (int w = 0; w < availableWidths.size() - 1; w++) {
 
                                 if ((availableWidths.get(w) + box.getWidth() == maxLength2) &&
-                                        (boxes.get(w).getLength() < (truck.getWidth() - x))) {
+                                        (boxes.get(w).getLength() < (truck.getWidth() - col))) {
 
                                     Box[] bothBoxes = new Box[]{boxes.get(w), box};
                                     if (truck.isValid(bothBoxes)) {
                                         boxes.get(w).rotate();
                                         box.rotate();
-                                        boxes.get(w).setCoords(x, startY2);
-                                        box.setCoords(x, startY + boxes.get(w).getLength());
+                                        boxes.get(w).setCoords(col, startRow2);
+                                        box.setCoords(col, startRow + boxes.get(w).getLength());
                                         truck.addBox(boxes.get(w));
                                         truck.addBox(box);
                                         boxes.remove(b);
@@ -205,6 +229,9 @@ public class PlacementSystem {
                                 }
                             }
                         }
+                    }
+                    if (truck.getMaxWeight() < truck.getLoadedWeight()) {
+                        System.out.println("a");
                     }
                 }
             }

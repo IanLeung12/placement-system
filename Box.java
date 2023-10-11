@@ -57,6 +57,9 @@ public class Box implements Comparable<Box> {
         return width;
     }
 
+    public int getHeight() {
+        return height;
+    }
     public int getPositionXInTruck() {
         return positionXInTruck;
     }
