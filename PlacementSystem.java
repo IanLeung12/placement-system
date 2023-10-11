@@ -34,13 +34,32 @@ public class PlacementSystem {
      */
     public void loadBoxToTruck(Box box, Truck truck, int x, int y) {
         boolean collides = false;
-        for (int row = y; row < y + box.getWidth(); row++) {
+        this.truckSpace = new int[truck.getWidth()][truck.getLength()];
+        for (int i = 0; i < this.truckSpace.length; i ++) {
+            for (int j = 0; j < this.truckSpace[i].length; j ++) {
+                this.truckSpace[i][j] = 0;
+            }
+
+        }
+        for (Box b: truck.getBoxes()) {
+            for (int i = b.getPositionYInTruck(); i < b.getPositionYInTruck() + b.getWidth(); i ++) {
+                for (int j = b.getPositionXInTruck(); j < b.getPositionXInTruck() + b.getWidth(); j ++) {
+                    if (truckSpace[i][j] != 0) {
+                        System.out.println("eeee");
+                    }
+                    this.truckSpace[i][j] = b.getId() % 9 + 1;
+                }
+            }
+        }
+
+        for (int row = y; row < y + box.getLength(); row++) {
             for (int col = x; col < x + box.getWidth(); col++) {
                 if (this.truckSpace[row][col] != 0) {
                     collides = true;
                 }
             }
         }
+
         if (!collides) {
             addBox(box, truck, x, y, box.getId());
         }
@@ -261,7 +280,7 @@ public class PlacementSystem {
                         }
                     }
                     if (truck.getMaxWeight() < truckLoadWeight) {
-                        System.out.println("a");
+                        System.out.println("a8");
                     }
                 }
             }
@@ -282,7 +301,7 @@ public class PlacementSystem {
     private boolean addBox(Box box, Truck truck, int x, int y, int id) {
         if (box.getWeight() + this.truckLoadWeight <= truck.getMaxWeight()) {
             if (x + box.getWidth() <= truck.getLength() && box.getHeight() <= truck.getHeight()) {
-                box.setCoords(x, y);
+                box.setCords(x, y);
                 truck.addBox(box);
                 for (int i = box.getPositionYInTruck(); i < box.getPositionYInTruck() + box.getWidth(); i ++) {
                     for (int j = box.getPositionXInTruck(); j < box.getPositionXInTruck() + box.getWidth(); j ++) {
@@ -377,6 +396,11 @@ public class PlacementSystem {
         return sortedBoxes;
     }
 
+    /**
+     * getTruckSpace
+     * returns an int array representing the boxes in a truck
+     * @return truckSpace the boxes in the truck
+     */
     public int[][] getTruckSpace() {
         return truckSpace;
     }

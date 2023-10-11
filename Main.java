@@ -36,10 +36,11 @@ public class Main {
         System.out.println(truck.getBoxes().size());
         Box newBox = new Box(123, 1, 3, 2, 2, null);
         Scanner input = new Scanner(System.in);
-//        while (true) {
-//            sys.loadBoxToTruck(newBox, truck, input.nextInt(), input.nextInt());
-//            System.out.println("qwerty");
-//        }
+        while (true) {
+            sys.loadBoxToTruck(newBox, truck, input.nextInt(), input.nextInt());
+            space = sys.getTruckSpace();
+            printTruck(space);
+        }
 
     }
     public static void printTruck(int[][] space) {

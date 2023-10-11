@@ -92,6 +92,11 @@ public class Truck {
         return loadedWeight;
     }
 
+    /**
+     * getTruckId
+     * returns the truck id
+     * @return truckId the id
+     */
     public int getTruckId() {
         return truckId;
     }
@@ -101,22 +106,47 @@ public class Truck {
         return "";
     }
 
+    /**
+     * getHeight
+     * returns the height of the truck
+     * @return height the truck height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * getLength
+     * returns the length of the truck
+     * @return length the truck length
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * getWidth
+     * returns the width of the truck
+     * @return width the width of the truck
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * getBoxes
+     * returns the boxes in the truck
+     * @return boxes the boxes
+     */
     public ArrayList<Box> getBoxes() {
         return boxes;
     }
 
+    /**
+     * getMaxWeight
+     * returns the max weight of the truck
+     * @return maxWeight the max weight
+     */
     public int getMaxWeight() {
         return maxWeight;
     }

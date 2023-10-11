@@ -24,6 +24,15 @@ public class Warehouse {
     final private int MAX_BOXES;
     final private int MAX_TRUCKS;
 
+    /**
+     * Warehouse
+     * creates a warehouse with boxes and trucks
+     * @param warehouseID the warehouse id
+     * @param MAX_BOXES the max boxes in the warehouse
+     * @param MAX_TRUCKS the max trucks in your warehouse
+     * @param boxes the boxes in the warehouse
+     * @param trucks the trucks in the warehouse
+     */
     public Warehouse(int warehouseID, final int MAX_BOXES, final int MAX_TRUCKS, ArrayList<Box> boxes,
             ArrayList<Truck> trucks) {
         this.warehouseID = warehouseID;
@@ -32,27 +41,31 @@ public class Warehouse {
 
         this.MAX_BOXES = MAX_BOXES;
         this.MAX_TRUCKS = MAX_TRUCKS;
-        Collections.sort(boxes);
     }
 
-    public Warehouse(int warehouseID, final int MAX_BOXES, final int MAX_TRUCKS, Box[] boxes, Truck[] trucks) {
-        this.warehouseID = warehouseID;
-
-        this.boxes = new ArrayList<Box>(Arrays.asList(boxes));
-        this.trucks = new ArrayList<Truck>(Arrays.asList(trucks));
-
-        this.MAX_BOXES = MAX_BOXES;
-        this.MAX_TRUCKS = MAX_TRUCKS;
-    }
-
+    /**
+     * addBox
+     * adds a box to the warehouse
+     * @param box the box to add
+     */
     public void addBox(Box box) {
         this.boxes.add(box);
     }
 
+    /**
+     * addTruck
+     * adds a truck to the warehouse
+     * @param truck the truck to add
+     */
     public void addTruck(Truck truck) {
         this.trucks.add(truck);
     }
 
+    /**
+     * removeBox
+     * removes a box from the warehouse
+     * @param boxID the id of the box
+     */
     public void removeBox(int boxID) {
         for (int i = 0; i < this.boxes.size(); i++) {
             if (this.boxes.get(i).getId() == boxID) {
@@ -62,6 +75,11 @@ public class Warehouse {
         }
     }
 
+    /**
+     * removeTruck
+     * removes a truck from the warehouse
+     * @param truckID the id of the truck
+     */
     public void removeTruck(int truckID) {
         for (int i = 0; i < this.trucks.size(); i++) {
             if (this.trucks.get(i).getTruckId() == truckID) {
@@ -70,6 +88,7 @@ public class Warehouse {
             }
         }
     }
+
 
     public void loadBoxes(File f) throws IOException {
 

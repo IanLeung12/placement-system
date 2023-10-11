@@ -78,41 +78,13 @@ public class Box implements Comparable<Box> {
         this.length = tempLength;
     }
 
-    public int getWeight() {
-        return this.weight;
-    }
-
-    public int getId() {
-        return this.boxID;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-    public int getPositionXInTruck() {
-        return positionXInTruck;
-    }
-
-    public int getPositionYInTruck() {
-        return positionYInTruck;
-    }
-
-    // temporary toString method
-
-    public String getProps() {
-        return "Box ID " + this.boxID + ": (" + this.positionXInTruck + ", " + this.positionYInTruck + ")" + ", (" +
-                this.width + ", " + this.length +"), " + this.weight;
-    }
-
-    public void setCoords(int x, int y) {
+    /**
+     * setCords
+     * sets the cordinates of the box in a truck
+     * @param x the x position
+     * @param y the y position
+     */
+    public void setCords(int x, int y) {
         this.positionXInTruck = x;
         this.positionYInTruck = y;
     }
@@ -133,5 +105,76 @@ public class Box implements Comparable<Box> {
         }
         return other.getWidth() - this.width;
     }
+
+    /**
+     * getWeight
+     * returns the weight of the box
+     * @return weight the weight
+     */
+    public int getWeight() {
+        return this.weight;
+    }
+
+    /**
+     * getId
+     * returns the id of the box
+     * @return boxID the id
+     */
+    public int getId() {
+        return this.boxID;
+    }
+
+    /**
+     * getLength
+     * returns the length of the box
+     * @return length the length
+     */
+    public int getLength() {
+        return length;
+    }
+
+    /**
+     * getWidth
+     * returns the width of the box
+     * @return width the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * getHeight
+     * returns the height of the box
+     * @return height the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * getPositionXInTruck
+     * returns the x position in a truck of the box
+     * @return positionXInTruck the x position
+     */
+    public int getPositionXInTruck() {
+        return positionXInTruck;
+    }
+
+    /**
+     * getPositionYInTruck
+     * returns the y position in a truck of the box
+     * @return positionXInTruck the y position
+     */
+    public int getPositionYInTruck() {
+        return positionYInTruck;
+    }
+
+    // temporary toString method
+
+    public String getProps() {
+        return "Box ID " + this.boxID + ": (" + this.positionXInTruck + ", " + this.positionYInTruck + ")" + ", (" +
+                this.width + ", " + this.length +"), " + this.weight;
+    }
+
 
 }
