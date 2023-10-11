@@ -1,3 +1,13 @@
+/**
+ * [Warehouse.java]
+ * This class simulates a warehouse storing boxes and trucks
+ * @author Ian Leung
+ * @author Sfan Shen
+ * @author Leon Yuan
+ * @version 1.0
+ * @since October 10, 2023
+ */
+
 import java.io.File;
 import java.io.IOException;
 import java.awt.Graphics;
@@ -43,12 +53,22 @@ public class Warehouse {
         this.trucks.add(truck);
     }
 
-    public void removeBox(Box box) {
-        this.boxes.remove(box);
+    public void removeBox(int boxID) {
+        for (int i = 0; i < this.boxes.size(); i++) {
+            if (this.boxes.get(i).getId() == boxID) {
+                this.boxes.remove(i);
+                i --;
+            }
+        }
     }
 
-    public void removeTruck(Truck truck) {
-        this.trucks.remove(truck);
+    public void removeTruck(int truckID) {
+        for (int i = 0; i < this.trucks.size(); i++) {
+            if (this.trucks.get(i).getTruckId() == truckID) {
+                this.trucks.remove(i);
+                i --;
+            }
+        }
     }
 
     public void loadBoxes(File f) throws IOException {

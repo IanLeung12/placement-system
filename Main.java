@@ -4,7 +4,8 @@
  * @author Ian Leung
  * @author Sfan Shen
  * @author Leon Yuan
- * @version 1.0 October 10, 2023
+ * @version 1.0
+ * @since October 10, 2023
  */
 
 import java.util.ArrayList;
@@ -15,30 +16,30 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Box> boxes = new ArrayList<>();
         for (int i = 0; i < 50; i ++) {
-            boxes.add(new Box(i, (int) (Math.random() * 25 + 1), (int) (Math.random() * 14 + 1), (int) (Math.random() * 15 + 1), (int) (Math.random() * 10  +1), null));
+            boxes.add(new Box(i, (int) (Math.random() * 25 + 1), (int) (Math.random() * 14 + 1), (int) (Math.random() * 15 + 1), (int) (Math.random() * 15  +1), null));
             //boxes.add(new Box(i, 69, 10, 10, 2, null));
         }
         Collections.sort(boxes);
         //Collections.reverse(boxes);
 
-        Truck truck = new Truck(1, 500, 999, 20, 100);
+        Truck truck = new Truck(1, 700, 999, 100, 20);
         PlacementSystem sys = new PlacementSystem();
         sys.loadBoxesToTruck(boxes, truck);
-        ArrayList<Box> load = truck.getLoadedBoxes();
+        ArrayList<Box> load = truck.getBoxes();
 
 
-        int[][] space = truck.getSpaceArray();
+        int[][] space = sys.getTruckSpace();
         printTruck(space);
-        System.out.println(truck.getLoadedWeight());
         for (Box box: boxes) {
             System.out.println(box.getProps());
         }
+        System.out.println(truck.getBoxes().size());
         Box newBox = new Box(123, 1, 3, 2, 2, null);
         Scanner input = new Scanner(System.in);
-        while (true) {
-            sys.loadBoxToTruck(newBox, truck, input.nextInt(), input.nextInt());
-            System.out.println("qwerty");
-        }
+//        while (true) {
+//            sys.loadBoxToTruck(newBox, truck, input.nextInt(), input.nextInt());
+//            System.out.println("qwerty");
+//        }
 
     }
     public static void printTruck(int[][] space) {
