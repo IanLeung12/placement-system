@@ -32,8 +32,7 @@ public class PlacementSystem {
      * @param x the x position to place the box
      * @param y the y position to place the box
      */
-    public void loadBoxToTruck(Box box, Truck truck, int x, int y) {
-        boolean collides = false;
+    public boolean loadBoxToTruck(Box box, Truck truck, int x, int y) {
         this.truckSpace = new int[truck.getWidth()][truck.getLength()];
         for (int i = 0; i < this.truckSpace.length; i ++) {
             for (int j = 0; j < this.truckSpace[i].length; j ++) {
@@ -55,14 +54,14 @@ public class PlacementSystem {
         for (int row = y; row < y + box.getLength(); row++) {
             for (int col = x; col < x + box.getWidth(); col++) {
                 if (this.truckSpace[row][col] != 0) {
-                    collides = true;
+                    return false;
                 }
             }
+
         }
 
-        if (!collides) {
-            addBox(box, truck, x, y, box.getId());
-        }
+        return addBox(box, truck, x, y, box.getId());
+
     }
 
     /**
@@ -82,6 +81,8 @@ public class PlacementSystem {
         int startRow2 = 0;
         int endY2;
         int maxWidth2;
+
+        boxes = PlacementSystem.temp(PlacementSystem.cutoff(boxes, Math.max(truck.getLength(), truck.getWidth())), truck);
 
         this.truckSpace = new int[truck.getWidth()][truck.getLength()];
         for (int i = 0; i < this.truckSpace.length; i ++) {
@@ -318,14 +319,7 @@ public class PlacementSystem {
         return false;
     }
 
-    /**
-     * cutoff
-     * removes boxes from the arraylist that do not fit in the truck
-     * @param boxes the arraylist of boxes
-     * @param len the cutoff length
-     * @return the modified arraylist
-     */
-    public static ArrayList<Box> cutoff(ArrayList<Box> boxes, int len) {
+    private static ArrayList<Box> cutoff(ArrayList<Box> boxes, int len) {
         Collections.sort(boxes);
         Collections.reverse(boxes);
         int low = 0;
@@ -378,6 +372,24 @@ public class PlacementSystem {
                 mid = (low + high) / 2;
             }
         }
+    }
+
+    private static ArrayList<Box> temp(ArrayList<Box> unsortedBoxes, Truck truck) {
+        ArrayList<Box> sortedBoxes = new ArrayList<>();
+        int minSideLength = Math.min(truck.getLength(), truck.getWidth());
+
+        for (int i = 0; i < unsortedBoxes.size(); i++) {
+            Box box = unsortedBoxes.get(i);
+            if (box.getLength() > minSideLength) {
+                if (!(box.getWidth() > minSideLength)) {
+                    sortedBoxes.add(box);
+                }
+            } else {
+                // Both length and width less than min side length
+                sortedBoxes.add(box);
+            }
+        }
+        return sortedBoxes;
     }
 
     /**
