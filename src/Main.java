@@ -29,15 +29,15 @@ public class Main {
 
         System.out.println("Type \"default\" for preset dimensions");
         if (input.nextLine().equals("default")) {
-            numBoxes = 0;
-            maxWeight = 30;
+            numBoxes = 30;
+            maxWeight = 20;
             maxHeight = 15;
             maxLength = 15;
             maxWidth = 15;
             truckMaxW = 600;
             truckHeight = 200;
-            truckLength = 9;
-            truckWidth = 9;
+            truckLength = 100;
+            truckWidth = 20;
         } else {
             System.out.println("How many boxes are you adding?");
             numBoxes = input.nextInt();
@@ -66,7 +66,7 @@ public class Main {
 
         Truck truck = new Truck(1, truckMaxW, truckHeight, truckLength, truckWidth);
 
-        PlacementSystem sys = new PlacementSystem();
+        PlacementSystem1 sys = new PlacementSystem1();
         sys.loadBoxesToTruck(boxes, truck);
 
         int[][] space = sys.getTruckSpace();
@@ -87,7 +87,7 @@ public class Main {
         }
 
         // Edit this to whatever you want
-        Box newBox = new Box(123, 1, 3, 10, 10, null);
+        Box newBox = new Box(123, 1, 3, 2, 2, null);
         boolean boxAdded = false;
         while (!boxAdded) {
             System.out.println("Type x and y coordinate to add 2x2 box");
