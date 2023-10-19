@@ -16,7 +16,8 @@ public class Main {
         Scanner input = new Scanner(System.in);
         ArrayList<Box> boxes = new ArrayList<>();
         Warehouse warehouse = new Warehouse(0, 100000, 100000, boxes, new ArrayList<Truck>());
-        //ReceivingSystem receive = new ReceivingSystem(warehouse);
+        ReceivingSystem receive = new ReceivingSystem(warehouse);
+        receive.start();
         int numBoxes;
         int maxWeight;
         int maxHeight;
@@ -66,7 +67,7 @@ public class Main {
 
         Truck truck = new Truck(1, truckMaxW, truckHeight, truckLength, truckWidth);
 
-        PlacementSystem1 sys = new PlacementSystem1();
+        PlacementSystem sys = new PlacementSystem();
         sys.loadBoxesToTruck(boxes, truck);
 
         int[][] space = sys.getTruckSpace();
