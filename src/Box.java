@@ -8,7 +8,7 @@
  * @since October 10, 2023
  */
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Box implements Comparable<Box> {
     private final int boxID;
@@ -19,7 +19,7 @@ public class Box implements Comparable<Box> {
     private int positionXInTruck;
     private int positionYInTruck;
     private final int positionZInTruck;
-    private final Color color;
+    private Color color;
 
     /**
      * Box
@@ -120,7 +120,7 @@ public class Box implements Comparable<Box> {
      * returns the id of the box
      * @return boxID the id
      */
-    public int getId() {
+    public int getBoxID() {
         return this.boxID;
     }
 
@@ -171,10 +171,31 @@ public class Box implements Comparable<Box> {
 
     // temporary toString method
 
-    public String getProps() {
-        return "Box ID: " + this.boxID + ", (width, length): " +  "(" +
-                this.width + ", " + this.length +"), Weight:" + this.weight;
+    public Color getColor() {
+        return this.color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String toString() {
+        return "Box{boxID=" + this.boxID + ", weight=" + this.weight + ", length=" + this.length + ", width=" + this.width + ", height=" + this.height + ", positionXInTruck=" + this.positionXInTruck + ", positionYInTruck=" + this.positionYInTruck + ", positionZInTruck=" + this.positionZInTruck + ", color=" + this.color + '}';
+    }
+
+    /**
+     * draw
+     * Draws the box
+     * @param g Graphics object from GraphicsPanel
+     * @param x int, the x coordinate where the box will be drawn
+     * @param y int, the y coordinate where the box will be drawn
+     * @param scaleFactor double, the factor by which the size of the boxes will be scaled
+     */
+    public void draw(Graphics g, int x, int y, double scaleFactor, int borderWidth) {
+        g.setColor(color.darker());
+        g.fillRect(x, y, (int)Math.round(width * scaleFactor), (int)Math.round(length * scaleFactor));
+        g.setColor(color);
+        g.fillRect(x + borderWidth, y + borderWidth, ((int)Math.round(width * scaleFactor)) - (2 * borderWidth), ((int)Math.round(length * scaleFactor)) - (2 * borderWidth));
+    }
 
 }

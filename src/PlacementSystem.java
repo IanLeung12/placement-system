@@ -59,7 +59,7 @@ public class PlacementSystem {
                         System.out.println("eeee");
                         printTruck(truckSpace);
                     }
-                    this.truckSpace[i][j] = b.getId() % 9 + 1;
+                    this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
                 }
             }
             System.out.println(b.getLength() + ", " + b.getWidth());
@@ -81,7 +81,7 @@ public class PlacementSystem {
         }
 
         System.out.println("return4");
-        boolean added = addBox(box, truck, x, y, box.getId());
+        boolean added = addBox(box, truck, x, y, box.getBoxID());
         if (added) {
             box.setCords(y, (truck.getLength() - x) - box.getLength());
         }
@@ -142,7 +142,7 @@ public class PlacementSystem {
                     if (truckSpace[i][j] != 0) {
                         System.out.println("eeee");
                     }
-                    this.truckSpace[i][j] = b.getId() % 9 + 1;
+                    this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
                 }
             }
         }
@@ -229,7 +229,7 @@ public class PlacementSystem {
                 if ((maxWidth > 0) || (maxWidth2 > 0)) {
 
                     if (box.getWidth() <= maxWidth) {
-                        if (this.addBox(box, truck, col, startRow, box.getId())) {
+                        if (this.addBox(box, truck, col, startRow, box.getBoxID())) {
                             boxes.remove(b);
                             availableLengths.remove(b);
                             startRow = startRow + box.getWidth();
@@ -239,7 +239,7 @@ public class PlacementSystem {
 
                     } else if (box.getLength() == maxWidth) {
                         box.rotate();
-                        if (this.addBox(box, truck, col, startRow, box.getId())) {
+                        if (this.addBox(box, truck, col, startRow, box.getBoxID())) {
                             boxes.remove(b);
                             availableLengths.remove(b);
                             startRow = startRow + box.getWidth();
@@ -255,7 +255,7 @@ public class PlacementSystem {
                             // When two widths combined fit the empty space
                             if ((box != null) && (availableLengths.get(w) + box.getLength() == maxWidth)) {
                                 box.rotate();
-                                if (this.addBox(box, truck, col, startRow, box.getId())) {
+                                if (this.addBox(box, truck, col, startRow, box.getBoxID())) {
                                     boxes.remove(b);
                                     availableLengths.remove(b);
                                     startRow = startRow + box.getWidth();
@@ -263,7 +263,7 @@ public class PlacementSystem {
                                     b--;
                                     box = null;
 
-                                    if (this.addBox(boxes.get(w), truck, col, startRow, boxes.get(w).getId())) {
+                                    if (this.addBox(boxes.get(w), truck, col, startRow, boxes.get(w).getBoxID())) {
                                         boxes.remove(w);
                                         availableLengths.remove(w);
                                         maxWidth = 0;
@@ -282,7 +282,7 @@ public class PlacementSystem {
 
                     } else if (maxWidth2 > 0) {
                         if (box.getWidth() <= maxWidth2) {
-                            if (this.addBox(box, truck, col, startRow2, box.getId())) {
+                            if (this.addBox(box, truck, col, startRow2, box.getBoxID())) {
                                 boxes.remove(b);
                                 availableLengths.remove(b);
                                 startRow2 = startRow2 + box.getWidth();
@@ -292,7 +292,7 @@ public class PlacementSystem {
 
                         } else if (box.getLength() == maxWidth2) {
                             box.rotate();
-                            if (this.addBox(box, truck, col, startRow2, box.getId())) {
+                            if (this.addBox(box, truck, col, startRow2, box.getBoxID())) {
                                 boxes.remove(b);
                                 availableLengths.remove(b);
                                 startRow2 = startRow2 + box.getWidth();
@@ -308,7 +308,7 @@ public class PlacementSystem {
                                 // When two widths combined fit the empty space
                                 if ((box != null) && (availableLengths.get(w) + box.getLength() == maxWidth2)) {
                                     box.rotate();
-                                    if (this.addBox(box, truck, col, startRow, box.getId())) {
+                                    if (this.addBox(box, truck, col, startRow, box.getBoxID())) {
                                         boxes.remove(b);
                                         availableLengths.remove(b);
                                         startRow2 = startRow2 + box.getWidth();
@@ -316,7 +316,7 @@ public class PlacementSystem {
                                         b--;
                                         box = null;
 
-                                        if (this.addBox(boxes.get(w), truck, col, startRow, boxes.get(w).getId())) {
+                                        if (this.addBox(boxes.get(w), truck, col, startRow, boxes.get(w).getBoxID())) {
                                             boxes.remove(w);
                                             availableLengths.remove(w);
                                             maxWidth2 = 0;

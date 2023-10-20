@@ -17,13 +17,16 @@ public class Warehouse {
     private ArrayList<Box> inventory = new ArrayList<>();
     private ArrayList<Truck> trucks = new ArrayList<>();
 
+
+    public Warehouse() {}
+
     /**
      * Warehouse
      * @param id - the id of warehosue
      * @param maxBoxes - maxboxes of warehouse
      * @param maxTrucks - max trucks of warehouse
      */
-    Warehouse(int id, int maxBoxes, int maxTrucks) {
+    public Warehouse(int id, int maxBoxes, int maxTrucks) {
         this.WarehouseID = id;
         this.MAX_BOXES = maxBoxes;
         this.MAX_TRUCKS = maxTrucks;
@@ -51,7 +54,7 @@ public class Warehouse {
     public void removeBox(int boxID) {
 
         for (Box box : this.inventory){
-            if(boxID == box.getId()){
+            if(boxID == box.getBoxID()){
                 this.inventory.remove(box);
             }
         }
@@ -82,12 +85,12 @@ public class Warehouse {
     public void removeTruck(int truckID) {
 
         for (Truck truck : this.trucks) {
-            if (truck.getTruckId() == truckID) {
+            if (truck.getTruckID() == truckID) {
                 this.inventory.addAll(truck.getBoxes());
             }
         }
 
-        this.trucks.removeIf(truck -> truck.getTruckId() == truckID);
+        this.trucks.removeIf(truck -> truck.getTruckID() == truckID);
     }
 
     // will be overridden

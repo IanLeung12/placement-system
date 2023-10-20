@@ -8,6 +8,8 @@
  * @since October 10, 2023
  */
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Truck {
@@ -16,7 +18,9 @@ public class Truck {
     private final int height;
     private final int length;
     private final int width;
+    private JButton truckButton;
     private final ArrayList<Box> boxes;
+    private final ImageIcon truckImage = new ImageIcon("out/display/Truck.png");
 
     /**
      * Truck
@@ -72,7 +76,7 @@ public class Truck {
      */
     public void removeBox(int boxId) {
          for (int i = 0; i < this.boxes.size(); i++) {
-             if (this.boxes.get(i).getId() == boxId) {
+             if (this.boxes.get(i).getBoxID() == boxId) {
                  this.boxes.remove(i);
                  i --;
              }
@@ -97,13 +101,8 @@ public class Truck {
      * returns the truck id
      * @return truckId the id
      */
-    public int getTruckId() {
+    public int getTruckID() {
         return truckId;
-    }
-
-    @Override
-    public String toString() {
-        return "";
     }
 
     /**
@@ -149,5 +148,67 @@ public class Truck {
      */
     public int getMaxWeight() {
         return maxWeight;
+    }
+
+    public String toString() {
+        return "Truck{truckID=" + this.truckId + ", maxWeight=" + this.maxWeight + ", height=" + this.height + ", length=" + this.length + ", width=" + this.width + '}';
+    }
+
+    public String toFileFormat() {
+        return this.truckId + "\n" + this.maxWeight + "\n" + this.height + "\n" + this.length + "\n" + this.width;
+    }
+
+    /**
+     * draw
+     * draws the truck
+     * @param g           Graphics object from GraphicsPanel
+     * @param x           int, x coordinate for the truck to be drawn
+     * @param y           int, y coordinate for the truck to be drawn
+     * @param length      int, the length
+     * @param width       int, the width
+     * @param scaleFactor double, the factor by which the size of the truck is scaled
+     */
+    public void draw(Graphics g, int x, int y, int length, int width, double scaleFactor) {
+        g.drawRect(x, y, (int) (width * scaleFactor), (int) (length * scaleFactor));
+    }
+
+    /**
+     * drawList
+     * draws the button of the truck, which redirects to a display of the truck
+     * @param graphicsPanel
+     * @return JButton
+     */
+    public JButton drawList(JPanel graphicsPanel) {
+        truckButton = new JButton("Truck " + getTruckID(), truckImage);
+        truckButton.setOpaque(true);
+        truckButton.setContentAreaFilled(false);
+        truckButton.setFocusPainted(false);
+        graphicsPanel.add(truckButton);
+        graphicsPanel.repaint();
+        return truckButton;
+    }
+
+    /**
+     * removeButton
+     * removes buttons from the graphics panel
+     * @param graphicsPanel
+     */
+    public void removeButton(JPanel graphicsPanel){
+        graphicsPanel.remove(truckButton);
+    }
+
+    /**
+     * findBox
+     * finds a box within the boxes ArrayList
+     * @param id
+     * @return Box
+     */
+    public int findBox(int id) {
+        for (int i = 0; i < boxes.size(); i++) {
+            if (boxes.get(i).getBoxID() == id) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

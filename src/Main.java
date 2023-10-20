@@ -15,13 +15,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         ArrayList<Box> boxes = new ArrayList<>();
-        Warehouse warehouse = new Warehouse(1, 99999, 20);
+        Warehouse warehouse = new Warehouse();
         PlacementSystem placement = new PlacementSystem();
         ReceivingSystem receive = new ReceivingSystem(warehouse);
         // DIsplay system not working rn cuz its in java 21
-        //DisplaySystem display = new DisplaySystem(warehouse, placement);
+        DisplaySystem display = new DisplaySystem(warehouse, placement);
         receive.start();
-        //display.runLoop();
+        display.runLoop();
+
     }
 }
 
