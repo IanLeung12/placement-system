@@ -11,6 +11,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Truck {
     private final int truckId;
@@ -151,7 +152,26 @@ public class Truck {
     }
 
     public String toString() {
-        return "Truck{truckID=" + this.truckId + ", maxWeight=" + this.maxWeight + ", height=" + this.height + ", length=" + this.length + ", width=" + this.width + '}';
+        StringBuilder string = new StringBuilder("Truck");
+        int[] values = ReceivingSystem.asArray(this);
+        int[] var3 = values;
+        int var4 = values.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            int value = var3[var5];
+            string.append(" ");
+            string.append(value);
+        }
+
+        Iterator var7 = this.boxes.iterator();
+
+        while(var7.hasNext()) {
+            Box box = (Box)var7.next();
+            string.append("\n");
+            string.append(box.toString());
+        }
+
+        return string.toString();
     }
 
     public String toFileFormat() {

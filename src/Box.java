@@ -180,7 +180,20 @@ public class Box implements Comparable<Box> {
     }
 
     public String toString() {
-        return "Box{boxID=" + this.boxID + ", weight=" + this.weight + ", length=" + this.length + ", width=" + this.width + ", height=" + this.height + ", positionXInTruck=" + this.positionXInTruck + ", positionYInTruck=" + this.positionYInTruck + ", positionZInTruck=" + this.positionZInTruck + ", color=" + this.color + '}';
+        StringBuilder string = new StringBuilder("Box");
+        int[] values = ReceivingSystem.asArray(this, false);
+        int[] var3 = values;
+        int var4 = values.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            int value = var3[var5];
+            string.append(" ");
+            string.append(value);
+        }
+
+        string.append(" ");
+        string.append(ReceivingSystem.getRGB(this.color));
+        return string.toString();
     }
 
     /**

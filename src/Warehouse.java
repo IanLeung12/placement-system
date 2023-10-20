@@ -53,9 +53,10 @@ public class Warehouse {
      */
     public void removeBox(int boxID) {
 
-        for (Box box : this.inventory){
-            if(boxID == box.getBoxID()){
-                this.inventory.remove(box);
+        for (int b = 0; b < this.inventory.size(); b ++){
+            if(boxID == this.inventory.get(b).getBoxID()){
+                this.inventory.remove(b);
+                b--;
             }
         }
 

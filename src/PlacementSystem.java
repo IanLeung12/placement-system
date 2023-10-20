@@ -36,10 +36,8 @@ public class PlacementSystem {
         this.truckSpace = new int[truck.getWidth()][truck.getLength()];
         this.truckLoadWeight = truck.getLoadedWeight();
 
-        System.out.println("x: " + x + " y: " + y);
 
         if (x < 0 || y < 0) {
-            System.out.println("return1");
             return false;
         }
 
@@ -57,12 +55,10 @@ public class PlacementSystem {
                 for (int j = getX(b); j < (getX(b) + b.getLength()); j ++) {
                     if (truckSpace[i][j] != 0) {
                         System.out.println("eeee");
-                        printTruck(truckSpace);
                     }
                     this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
                 }
             }
-            System.out.println(b.getLength() + ", " + b.getWidth());
         }
 
 
@@ -70,42 +66,19 @@ public class PlacementSystem {
         for (int row = y; row < y + box.getWidth(); row++) {
             for (int col = x; col < x + box.getLength(); col++) {
                 if ((row >= truck.getWidth()) || (col >= truck.getLength())) {
-                    System.out.println("return2");
                     return false;
                 } else if (this.truckSpace[row][col] != 0) {
-                    System.out.println("return3");
                     return false;
                 }
             }
 
         }
 
-        System.out.println("return4");
         boolean added = addBox(box, truck, x, y, box.getBoxID());
         if (added) {
             box.setCords(y, (truck.getLength() - x) - box.getLength());
         }
-        printTruck(truckSpace);
         return added;
-    }
-
-    public static void printTruck(int[][] space) {
-        int counter = 0;
-        System.out.print("i: ");
-        for (int j = 0; j < space[0].length; j ++) {
-            System.out.print(j % 10);
-        }
-        System.out.println();
-        for (int i = 0; i < space.length; i ++) {
-            System.out.print(i % 10 + ": ");
-            for (int j = 0; j < space[i].length; j ++) {
-                System.out.print(space[i][j] + " ");
-                if (space[i][j] == 0) {
-                    counter ++;
-                }
-            }
-            System.out.println();
-        }
     }
 
     /**
@@ -344,7 +317,6 @@ public class PlacementSystem {
             box.setCords(box.getPositionYInTruck(),
                     truck.getLength() - box.getPositionXInTruck() - box.getLength());
         }
-        printTruck(truckSpace);
     }
 
     /**
