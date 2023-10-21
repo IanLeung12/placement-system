@@ -8,7 +8,8 @@
  * @since October 10, 2023
  */
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class Box implements Comparable<Box> {
     private final int boxID;
@@ -23,7 +24,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * Box
-     * creates a box without a position in a truck
+     * Creates a box without a position in a truck
      * @param id the id
      * @param weight the weight
      * @param height the height
@@ -45,7 +46,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * Box
-     * creates a box with a position within a truck
+     * Creates a box with a position within a truck
      * @param id the id
      * @param weight the weight
      * @param height the height
@@ -70,7 +71,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * rotate
-     * rotates the box
+     * Rotates the box by switching the width value and length value
      */
     public void rotate() {
         int tempLength = this.width;
@@ -80,7 +81,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * setCords
-     * sets the cordinates of the box in a truck
+     * Sets the coordinates of the box in a truck
      * @param x the x position
      * @param y the y position
      */
@@ -91,9 +92,9 @@ public class Box implements Comparable<Box> {
 
     /**
      * compareTo
-     * compares to another box based on its greatest side length for sorting purposes
+     * Compares to another box based on its smaller side length for sorting purposes
      * @param other the object to be compared.
-     * @return the difference between their greatest side lengths
+     * @return the difference between their smaller side lengths
      */
     @Override
     public int compareTo(Box other) {
@@ -108,25 +109,25 @@ public class Box implements Comparable<Box> {
 
     /**
      * getWeight
-     * returns the weight of the box
+     * Returns the weight of the box
      * @return weight the weight
      */
     public int getWeight() {
-        return this.weight;
+        return weight;
     }
 
     /**
      * getId
-     * returns the id of the box
+     * Returns the id of the box
      * @return boxID the id
      */
     public int getBoxID() {
-        return this.boxID;
+        return boxID;
     }
 
     /**
      * getLength
-     * returns the length of the box
+     * Returns the length of the box
      * @return length the length
      */
     public int getLength() {
@@ -135,7 +136,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * getWidth
-     * returns the width of the box
+     * Returns the width of the box
      * @return width the width
      */
     public int getWidth() {
@@ -144,7 +145,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * getHeight
-     * returns the height of the box
+     * Returns the height of the box
      * @return height the height
      */
     public int getHeight() {
@@ -153,7 +154,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * getPositionXInTruck
-     * returns the x position in a truck of the box
+     * Returns the x position in a truck of the box
      * @return positionXInTruck the x position
      */
     public int getPositionXInTruck() {
@@ -162,7 +163,7 @@ public class Box implements Comparable<Box> {
 
     /**
      * getPositionYInTruck
-     * returns the y position in a truck of the box
+     * Returns the y position in a truck of the box
      * @return positionYInTruck the y position
      */
     public int getPositionYInTruck() {
@@ -171,23 +172,29 @@ public class Box implements Comparable<Box> {
 
     /**
      * getPositionZInTruck
-     * returns the z position in a truck of the box
+     * Returns the z position in a truck of the box
      * @return positionZInTruck the z position
+     * @return
      */
     public int getPositionZInTruck() {
         return positionZInTruck;
     }
 
-    // temporary toString method
-
+    /**
+     * getColor
+     * Returns the color of the box
+     * @return color the color
+     */
     public Color getColor() {
-        return this.color;
+        return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
+    /**
+     * toString
+     * Returning a string representation of the box for saving
+     * @return the string representation of the box
+     */
+    @Override
     public String toString() {
         StringBuilder string = new StringBuilder("Box");
         int[] values = ReceivingSystem.asArray(this, false);

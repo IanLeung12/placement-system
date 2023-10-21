@@ -8,9 +8,6 @@
  * @since October 10, 2023
  */
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         Warehouse warehouse = new Warehouse();

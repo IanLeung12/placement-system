@@ -51,8 +51,8 @@ public class PlacementSystem {
 
 
         for (Box b: truck.getBoxes()) {
-            for (int i = getY(b); i < (getY(b) + b.getWidth()); i ++) {
-                for (int j = getX(b); j < (getX(b) + b.getLength()); j ++) {
+            for (int i = getDisplayY(b); i < (getDisplayY(b) + b.getWidth()); i ++) {
+                for (int j = getDisplayX(b); j < (getDisplayX(b) + b.getLength()); j ++) {
                     this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
                 }
             }
@@ -84,7 +84,14 @@ public class PlacementSystem {
      * @param boxes the boxes
      * @param truck the truck
      */
+    /**
+     * loadBoxesToTruck
+     * Loads an array of boxes to a truck
+     * @param boxes the boxes
+     * @param truck the truck
+     */
     public void loadBoxesToTruck(ArrayList<Box> boxes, Truck truck) {
+
         this.truckLoadWeight = truck.getLoadedWeight();
         ArrayList<Integer> availableLengths = new ArrayList<>();
         int row;
@@ -97,14 +104,11 @@ public class PlacementSystem {
         int endY2;
         int maxWidth2;
 
-        //boxes = PlacementSystem.temp(PlacementSystem.cutoff(boxes, Math.max(truck.getLength(), truck.getWidth())), truck);
-
-        this.truckSpace = new int[truck.getWidth()][truck.getLength()];
+        this.truckSpace = new int[truck.getWidth()][truck.getLength()]; // creates empty truck space array
         for (int i = 0; i < this.truckSpace.length; i ++) {
             for (int j = 0; j < this.truckSpace[i].length; j ++) {
                 this.truckSpace[i][j] = 0;
             }
-
         }
 
         for (int b = 0; b < truck.getBoxes().size(); b++) {
@@ -113,8 +117,8 @@ public class PlacementSystem {
             truck.getBoxes().remove(b);
             b--;
         }
-        Collections.sort(boxes);
 
+        Collections.sort(boxes);
 
         for (int col = 0; col < truck.getLength(); col ++) {
             availableLengths.clear();
@@ -159,15 +163,12 @@ public class PlacementSystem {
 
                 while (row < truck.getWidth()) {
                     if (this.truckSpace[row][col] == 0) {
-
                         if (startRow2 == -1) {
                             startRow2 = -2;
-
                         } else if (startRow2 == -3) {
                             startRow2 = row;
                             endY2 = -2;
                         }
-
                     } else {
                         if (startRow2 == -2) {
                             startRow2 = -3;
@@ -175,9 +176,8 @@ public class PlacementSystem {
 
                         // Indicates that program has passed the dividing box, allowing the second starting position
                         if ((startRow2 != -3) && (endY2 == -2)) {
-                            endY2 = row;
+                            endY2 = row - 1;
                         }
-
                     }
                     row++;
                 }
@@ -185,11 +185,10 @@ public class PlacementSystem {
                 if (endY2 < 0) {
                     endY2 = truck.getWidth() - 1;
                 }
-                maxWidth2 = endY2 - startRow2;
+                maxWidth2 = endY2 - startRow2 + 1;
             }
 
             for (int b = 0; b < boxes.size(); b++) { // Boxes are ordered in decreasing length
-
                 Box box = boxes.get(b);
                 availableLengths.add(box.getWidth());
 
@@ -304,15 +303,11 @@ public class PlacementSystem {
                 }
             }
         }
-        for (Box box: truck.getBoxes()) {
-            box.setCords(box.getPositionYInTruck(),
-                    truck.getLength() - box.getPositionXInTruck() - box.getLength());
-        }
     }
 
     /**
      * addBox
-     * tests if a box can fit in a given position in a truck, and adds it if possible
+     * Tests if a box can fit in a given position in a truck, and adds it if possible
      * @param box the box
      * @param truck the truck
      * @param x the x position to place the box
@@ -325,10 +320,8 @@ public class PlacementSystem {
             if ((x + box.getLength() <= truck.getLength()) && (y + box.getWidth() <= truck.getWidth()) && (box.getHeight() <= truck.getHeight())) {
                 box.setCords(x, y);
                 truck.addBox(box);
-                for (int i = y; i < y + box.getWidth(); i++) {
-                    for (int j = x; j < x + box.getLength(); j++) {
-                        if (truckSpace[i][j] != 0) {
-                        }
+                for (int i = y; i < y + box.getWidth(); i ++) {
+                    for (int j = x; j < x + box.getLength(); j ++) {
                         this.truckSpace[i][j] = id % 9 + 1;
                     }
                 }
@@ -337,79 +330,6 @@ public class PlacementSystem {
             }
         }
         return false;
-    }
-
-    private static ArrayList<Box> cutoff(ArrayList<Box> boxes, int len) {
-        Collections.sort(boxes);
-        Collections.reverse(boxes);
-        int low = 0;
-        int high = boxes.size() - 1;
-        if (boxes.get(low).getLength() > len) {
-            return new ArrayList<Box>();
-        }
-        if (boxes.get(high - 1).getLength() < len) {
-            return boxes;
-        }
-        low = Math.min(1, boxes.size());
-        high = boxes.size() - 1;
-        int mid = (low + high) / 2;
-        while (true) {
-            // System.out.println(low+" "+high+" "+mid);
-            // fail safe
-            if (low > high) {
-                // System.out.println("not found");
-                return new ArrayList<Box>();
-            } else {
-                // if the box of size limit is found, check linearly until it reaches a box that
-                // is bigger than the limit
-                if (boxes.get(mid).getLength() == len) {
-                    // System.out.println(mid);
-                    // System.out.println(len);
-                    for (int i = mid; i < boxes.size(); i++) {
-                        // System.out.println(boxes.get(i).getLength());
-                        if (boxes.get(i).getLength() > len) {
-                            // System.out.println(i-1);
-                            return new ArrayList<>(boxes.subList(0, i));
-                        }
-                    }
-                }
-                // if the box is less than the limit, check the box to the right of it, if that
-                // is not over the limit, check the right side of the current box
-                else if (boxes.get(mid).getLength() < len) {
-                    if (boxes.get(mid + 1).getLength() > len) {
-                        return new ArrayList<>(boxes.subList(0, mid + 1));
-                    }
-                    low = mid + 1;
-                }
-                // if the box is greater than the limit, check the box to the left of it, if
-                // that is not under/equal to the limit, check the left side of the current box
-                else if (boxes.get(mid).getLength() > len) {
-                    if (boxes.get(mid - 1).getLength() <= len) {
-                        return new ArrayList<>(boxes.subList(0, mid));
-                    }
-                    high = mid - 1;
-                }
-                mid = (low + high) / 2;
-            }
-        }
-    }
-
-    private static ArrayList<Box> temp(ArrayList<Box> unsortedBoxes, Truck truck) {
-        ArrayList<Box> sortedBoxes = new ArrayList<>();
-        int minSideLength = Math.min(truck.getLength(), truck.getWidth());
-
-        for (int i = 0; i < unsortedBoxes.size(); i++) {
-            Box box = unsortedBoxes.get(i);
-            if (box.getLength() > minSideLength) {
-                if (!(box.getWidth() > minSideLength)) {
-                    sortedBoxes.add(box);
-                }
-            } else {
-                // Both length and width less than min side length
-                sortedBoxes.add(box);
-            }
-        }
-        return sortedBoxes;
     }
 
     /**
@@ -421,11 +341,23 @@ public class PlacementSystem {
         return truckSpace;
     }
 
-    private int getX(Box box) {
+    /**
+     * getDisplayX
+     * converts a box's x position into one useable for the display system
+     * @param box the box
+     * @return the edited x position
+     */
+    private int getDisplayX(Box box) {
         return (truckSpace[0].length - box.getPositionYInTruck()) - box.getLength();
     }
 
-    private int getY(Box box) {
+    /**
+     * getDisplayY
+     * converts a box's y position into one useable for the display system
+     * @param box the box
+     * @return the edited y position
+     */
+    private int getDisplayY(Box box) {
         return box.getPositionXInTruck();
     }
 }
