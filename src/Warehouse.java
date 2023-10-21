@@ -97,6 +97,15 @@ public class Warehouse {
     // will be overridden
     public void draw(Graphics g) {    }
 
+    public int findBox(int id) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getBoxID() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * toString override
      * will make a string out of warehouse and values - used in uplaoding info to files

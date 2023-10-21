@@ -163,10 +163,19 @@ public class Box implements Comparable<Box> {
     /**
      * getPositionYInTruck
      * returns the y position in a truck of the box
-     * @return positionXInTruck the y position
+     * @return positionYInTruck the y position
      */
     public int getPositionYInTruck() {
         return positionYInTruck;
+    }
+
+    /**
+     * getPositionZInTruck
+     * returns the z position in a truck of the box
+     * @return positionZInTruck the z position
+     */
+    public int getPositionZInTruck() {
+        return positionZInTruck;
     }
 
     // temporary toString method

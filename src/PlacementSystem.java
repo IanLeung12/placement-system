@@ -16,6 +16,7 @@ public class PlacementSystem {
     private int truckLoadWeight;
     private int[][] truckSpace;
 
+
     /**
      * PlacementSystem
      * creates a placement system
@@ -50,12 +51,8 @@ public class PlacementSystem {
 
 
         for (Box b: truck.getBoxes()) {
-            System.out.println("x: " + getX(b) + " y: " + getY(b));
             for (int i = getY(b); i < (getY(b) + b.getWidth()); i ++) {
                 for (int j = getX(b); j < (getX(b) + b.getLength()); j ++) {
-                    if (truckSpace[i][j] != 0) {
-                        System.out.println("eeee");
-                    }
                     this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
                 }
             }
@@ -88,8 +85,8 @@ public class PlacementSystem {
      * @param truck the truck
      */
     public void loadBoxesToTruck(ArrayList<Box> boxes, Truck truck) {
-        Collections.sort(boxes);
         this.truckLoadWeight = truck.getLoadedWeight();
+        ArrayList<Integer> availableLengths = new ArrayList<>();
         int row;
         int startRow;
         int endY;
@@ -109,17 +106,14 @@ public class PlacementSystem {
             }
 
         }
-        for (Box b: truck.getBoxes()) {
-            for (int i = getY(b); i <(getY(b) + b.getWidth()); i ++) {
-                for (int j = getX(b); j <(getX(b) + b.getLength()); j ++) {
-                    if (truckSpace[i][j] != 0) {
-                        System.out.println("eeee");
-                    }
-                    this.truckSpace[i][j] = b.getBoxID() % 9 + 1;
-                }
-            }
+
+        for (int b = 0; b < truck.getBoxes().size(); b++) {
+            truck.getBoxes().get(b).setCords(-1, -1);
+            boxes.add(truck.getBoxes().get(b));
+            truck.getBoxes().remove(b);
+            b--;
         }
-        ArrayList<Integer> availableLengths = new ArrayList<>();
+        Collections.sort(boxes);
 
 
         for (int col = 0; col < truck.getLength(); col ++) {
@@ -307,9 +301,6 @@ public class PlacementSystem {
                             }
                         }
                     }
-                    if (truck.getMaxWeight() < truckLoadWeight) {
-                        System.out.println("a8");
-                    }
                 }
             }
         }
@@ -334,21 +325,16 @@ public class PlacementSystem {
             if ((x + box.getLength() <= truck.getLength()) && (y + box.getWidth() <= truck.getWidth()) && (box.getHeight() <= truck.getHeight())) {
                 box.setCords(x, y);
                 truck.addBox(box);
-                for (int i = y; i < y + box.getWidth(); i ++) {
-                    for (int j = x; j < x + box.getLength(); j ++) {
+                for (int i = y; i < y + box.getWidth(); i++) {
+                    for (int j = x; j < x + box.getLength(); j++) {
                         if (truckSpace[i][j] != 0) {
-                            System.out.println("asdf");
                         }
                         this.truckSpace[i][j] = id % 9 + 1;
                     }
                 }
                 truckLoadWeight = truckLoadWeight + box.getWeight();
                 return true;
-            } else {
-                System.out.println(x + ", " + box.getWidth());
             }
-        } else {
-            System.out.println("2222");
         }
         return false;
     }

@@ -21,6 +21,7 @@ public class Truck {
     private final int width;
     private JButton truckButton;
     private final ArrayList<Box> boxes;
+
     private final ImageIcon truckImage = new ImageIcon("out/display/Truck.png");
 
     /**

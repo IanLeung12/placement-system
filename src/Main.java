@@ -13,8 +13,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        ArrayList<Box> boxes = new ArrayList<>();
         Warehouse warehouse = new Warehouse();
         PlacementSystem placement = new PlacementSystem();
         ReceivingSystem receive = new ReceivingSystem(warehouse);
